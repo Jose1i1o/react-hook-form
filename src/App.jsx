@@ -13,7 +13,7 @@ export const App = () => {
         <input name='firstName' placeholder="First name" />
         <input name='hobbies' placeholder="i.e. coding every day 🤩" />
         <input name='favourite series' placeholder="Breaking bad" />
-        <input type="submit" />
+        <button type="submit">Submit</button>
       </form>
     </>
   );
