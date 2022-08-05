@@ -7,7 +7,9 @@ let renderedCount = 0;
 export const App = () => {
 
   renderedCount++;
-  const { register, handleSubmit, watch, formState: { errors } } = useForm({
+  const { register, handleSubmit, watch, formState: 
+    { erros, dirtyFields, touchFields, isSubmitted }}
+    = useForm({
     dafaultValues: {
       firstName: "",
       hobbies: "",
@@ -16,6 +18,8 @@ export const App = () => {
   });
   // register es una función callback que nos devuelve algunas props y las
   // inyecta directamente en los inputs
+
+  console.log( "isSubmitted", isSubmitted )
 
   const firstNameWatch = watch("firstName");
 
