@@ -1,20 +1,50 @@
-import { useForm } from "react-hook-form";
+import { useForm } from 'react-hook-form';
+
 import Header from "./ui/Header/Header";
+
 
 let renderedCount = 0;
 export const App = () => {
 
   renderedCount++;
+  const { register, handleSubmit, watch, formState: { errors } } = useForm({
+    dafaultValues: {
+      firstName: "",
+      hobbies: "",
+      favouriteSeries: ""
+    }
+  });
+  // register es una función callback que nos devuelve algunas props y las
+  // inyecta directamente en los inputs
+
+  const firstNameWatch = watch("firstName");
+
+  const onSubmit = (data) => {
+    console.log(data);
+  }
+
+  
 
   return (
     <>
       <Header renderedCount={renderedCount}/>
       <h1>Login</h1>
-      <form>
-        <input name='firstName' placeholder="First name" />
-        <input name='hobbies' placeholder="i.e. coding every day 🤩" />
-        <input name='favourite series' placeholder="Breaking bad" />
-        <input type="submit" />
+      <form onSubmit={ handleSubmit(onSubmit) }>
+        {/* <input {...register('firstName', { required: true, minLength: 2 })} placeholder="First name" /> */}
+        <input {...register("firstName", { required: 'Name is required', minLength: {
+          value: 4,
+          message: 'Minimum length is 4'
+        } })} placeholder="Insert here your beautiful name 🫶"/>
+        <p>{firstNameWatch}</p>
+        { errors.firstName && <p>{errors.firstName.message}</p> }
+        <input {...register("hobbies", { required: 'I want to know you better Jose', minLength: {
+          value: 6,
+          message: 'Minimum lenght is 6'
+        } })} placeholder="I.e. Read a book underwater" />
+        { <p>{errors.hobbies?.message}</p> }
+        <input {...register("favouriteSeries", { required: false })} placeholder="breaking bad" />
+        { <p>{errors.favouriteSeries?.message}</p> }
+        <input type="submit"/>
       </form>
     </>
   );
